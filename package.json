@@ -1,0 +1,22 @@
+{
+  "name": "athlete_stuff",
+  "version": "0.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "forever index.js"
+  },
+  "author": "",
+  "license": "BSD",
+  "dependencies": {
+    "request": "~2.25.0",
+    "jsdom": "~0.8.2",
+    "nano": "~4.1.1",
+    "leveldown": "~0.6.2",
+    "levelup": "~0.12.0",
+    "deep-equal": "0.0.0",
+    "forever": "~0.10.8",
+    "express": "~3.3.4"
+  }
+}
