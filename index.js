@@ -1,9 +1,10 @@
-var levelup        = require('levelup')
-  , express        = require('express')
-  , db             = levelup('./leveldb', {encoding: 'json'})
-  , app            = express()
-  , scraper        = require('./lib/scraper')
-  ;
+var levelup = require('levelup'),
+  express = require('express'),
+  db = levelup('./leveldb', {
+    encoding: 'json'
+  }),
+  app = express(),
+  scraper = require('./lib/scraper');
 
 //
 // start scraping
@@ -19,12 +20,14 @@ app.use(function log(req, res, next) {
 // gets an athlete by id
 //
 app.get('/athlete/:id', function(req, res) {
-  db.get(req.params.id, function (err, athlete) {
-    if(err) {
+  db.get(req.params.id, function(err, athlete) {
+    if (err) {
       //
       // not found
       //
-      res.json(404, { error: 'athlete not found' });
+      res.json(404, {
+        error: 'athlete not found'
+      });
       return;
     }
     //
