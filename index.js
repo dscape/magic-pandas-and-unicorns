@@ -1,9 +1,8 @@
-var levelup = require('levelup'),
+var 
   express = require('express'),
-  db = levelup('./leveldb', {
-    encoding: 'json'
-  }),
+  qs = require('querystring'),
   app = express(),
+  db = require('./lib/db')(),
   scraper = require('./lib/scraper');
 
 //
@@ -34,6 +33,15 @@ app.get('/athlete/:id', function(req, res) {
     // return from database
     //
     res.json(200, athlete);
+  });
+});
+
+app.get('/search', function (req, res) {
+  db.range(req.query, function (err, results) {
+    if(err) {
+      return res.json(500, {error: 'Bad search'});
+    }
+    res.json(200, (results || []));
   });
 });
 
