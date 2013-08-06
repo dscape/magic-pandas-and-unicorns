@@ -18,8 +18,10 @@ function formatted_url(athlete_id) {
 
 function get_time_struct(time) {
   time = time.trim();
-  if(!/^[0-5]?[0-9]:[0-5][0-9]\.[0-9][0-9]$/.test(time)){
-    return {value: time};
+  if (!/^[0-5]?[0-9]:[0-5][0-9]\.[0-9][0-9]$/.test(time)) {
+    return {
+      value: time
+    };
   }
   var where = 'outdoors';
 
@@ -43,6 +45,7 @@ function get_time_struct(time) {
 //
 // gets and stores information about a specific athlete
 //
+
 function getAthlete(id, next) {
   //
   // get the data from the official website
@@ -50,7 +53,7 @@ function getAthlete(id, next) {
   jsdom.env({
     url: formatted_url(id),
     scripts: ["http://code.jquery.com/jquery.js"],
-    done: function(errors, window) {
+    done: function (errors, window) {
       //
       // restart the script if there are errors
       //
@@ -88,23 +91,23 @@ function getAthlete(id, next) {
       // date: 1984-01-01
       //
       $('div[id=ctl00_cphBody_pnlAthleteDetails] table td td')
-        .each(function(_, td) {
-        var val = $(td)
-          .text();
-        //
-        // we haz keypair
-        //
-        if (previous_key) {
-          previous_key = previous_key.replace(/ /g, '_').toLowerCase();
-          athlete[previous_key] = val;
-          previous_key = null;
-        } else {
+        .each(function (_, td) {
+          var val = $(td)
+            .text();
           //
-          // remove : from `Country:`
+          // we haz keypair
           //
-          previous_key = val.split(':')[0];
-        }
-      });
+          if (previous_key) {
+            previous_key = previous_key.replace(/ /g, '_').toLowerCase();
+            athlete[previous_key] = val;
+            previous_key = null;
+          } else {
+            //
+            // remove : from `Country:`
+            //
+            previous_key = val.split(':')[0];
+          }
+        });
       //
       // no such id
       //
@@ -118,11 +121,11 @@ function getAthlete(id, next) {
       //
       var headers = $($('div[id=ctl00_cphBody_pnlBestPerformances] table tr .bestperformancesheader')[0])
         .find('td')
-        .map(function(i, node) {
-        return $(node)
-          .text()
-          .toLowerCase();
-      });
+        .map(function (i, node) {
+          return $(node)
+            .text()
+            .toLowerCase();
+        });
 
       //
       // remove the first element which is garbabe
@@ -135,62 +138,62 @@ function getAthlete(id, next) {
       $('div[id=ctl00_cphBody_pnlBestPerformances] table tr')
         .each(
 
-      function() {
+          function () {
 
-        //
-        // one record
-        //
+            //
+            // one record
+            //
 
-        //
-        // get all the cells
-        //
-        var tds = $(this)
-          .find('td'),
-          first_text = $(tds[0])
-            .text();
+            //
+            // get all the cells
+            //
+            var tds = $(this)
+              .find('td'),
+              first_text = $(tds[0])
+                .text();
 
-        //
-        // quick and dirty way of finding if this is something
-        // we actually care about
-        //
-        // digits (one or more), HU, digits (one or more), M or W
-        //
-        if (!/^\d+(HU\d+(M|W))?$/.test(first_text)) {
-          return;
-        }
-
-        //
-        // for each of this ranges
-        //
-        // first is personal best
-        // 2013, 2012, 2011, 2010, 2009
-        //
-        var current_evt;
-
-        tds.each(function(i, tr) {
-          var time = $(tr)
-            .text();
-          //
-          // creating the structure for the event
-          //
-          if (i === 0) {
-            current_evt = time;
-            var match = /^(\d+)((HU)(\d+)(M|W))?$/.exec(current_evt);
-            athlete[current_evt] = {
-              match: match
-            };
-            
-          }
-          //
-          // personal best
-          //
-          else {
-            if (time !== '') {
-              athlete[current_evt][headers[i - 1]] = get_time_struct(time);
+            //
+            // quick and dirty way of finding if this is something
+            // we actually care about
+            //
+            // digits (one or more), HU, digits (one or more), M or W
+            //
+            if (!/^\d+(HU\d+(M|W))?$/.test(first_text)) {
+              return;
             }
-          }
-        });
-      });
+
+            //
+            // for each of this ranges
+            //
+            // first is personal best
+            // 2013, 2012, 2011, 2010, 2009
+            //
+            var current_evt;
+
+            tds.each(function (i, tr) {
+              var time = $(tr)
+                .text();
+              //
+              // creating the structure for the event
+              //
+              if (i === 0) {
+                current_evt = time;
+                var match = /^(\d+)((HU)(\d+)(M|W))?$/.exec(current_evt);
+                athlete[current_evt] = {
+                  match: match
+                };
+
+              }
+              //
+              // personal best
+              //
+              else {
+                if (time !== '') {
+                  athlete[current_evt][headers[i - 1]] = get_time_struct(time);
+                }
+              }
+            });
+          });
       //
       // return the athlete to the next function
       //
@@ -200,8 +203,8 @@ function getAthlete(id, next) {
 }
 
 getAthlete(a_id, function (err, doc) {
-  if(err) {
+  if (err) {
     return console.error(err);
   }
-  console.log(JSON.stringify(doc,null,2));
+  console.log(JSON.stringify(doc, null, 2));
 });
