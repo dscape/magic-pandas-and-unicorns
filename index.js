@@ -60,12 +60,12 @@ app.get('/athlete/:id', function (req, res) {
 //
 // samples:
 //
-// curl localhost:3000/range?gender=Female\&id=1
-// curl localhost:3000/range?gender=Female\&id=30
-// curl localhost:3000/range?where=outdoors
-// curl localhost:3000/range?id=1
+// curl localhost:3000/query?gender=Female\&id=1
+// curl localhost:3000/query?gender=Female\&id=30
+// curl localhost:3000/query?where=outdoors
+// curl localhost:3000/query?id=1
 //
-app.get('/range', function (req, res) {
+app.get('/query', function (req, res) {
   db.query(req.query, function (err, results) {
     if (err) {
       return res.json(500, {
