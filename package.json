@@ -18,6 +18,9 @@
     "forever": "~0.10.8",
     "express": "~3.3.4",
     "async": "~0.2.9",
-    "dscape-mind-explosion-database": "~0.0.1"
+    "dscape-mind-explosion-database": "~0.0.1",
+    "mergesorted": "0.0.0",
+    "rangebound": "0.0.0",
+    "parentchild": "0.0.0"
   }
 }

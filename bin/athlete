@@ -18,7 +18,7 @@ function formatted_url(athlete_id) {
 
 function get_time_struct(time) {
   time = time.trim();
-  if (!/^[0-5]?[0-9]:[0-5][0-9]\.[0-9][0-9]$/.test(time)) {
+  if (!/^[0-5]?[0-9]:[0-5][0-9]\.[0-9][0-9]?$/.test(time)) {
     return {
       value: time
     };
